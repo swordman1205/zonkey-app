@@ -1,0 +1,103 @@
+<header id="topnav">
+    <div class="topbar-main">
+        <div class="container">
+
+            <!-- LOGO -->
+            <div class="topbar-left">
+                <a ui-sref="main.home" class="logo">
+                    <img src="vendor/images/zon96.png"/>
+                </a>
+            </div>
+            <!-- End Logo container-->
+
+
+            <div class="menu-extras">
+
+                <ul class="nav navbar-nav pull-right">
+
+                    <li class="nav-item">
+                        <!-- Mobile menu toggle-->
+                        <a class="navbar-toggle">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                        <!-- End mobile menu toggle-->
+                    </li>
+
+                    <li class="nav-item hidden-sm-down">
+                        <form role="search" class="navbar-left app-search pull-left hidden-xs">
+                             <input type="text" placeholder="Search..." class="form-control" ng-model="vm.searchKey">
+                             <a href=""><i class="fa fa-search"></i></a>
+                        </form>
+                    </li>
+
+                    <li class="nav-item dropdown notification-list" uib-dropdown>
+                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" uib-dropdown-toggle href="#" role="button"
+                           aria-haspopup="false" aria-expanded="false">
+                            <i class="zmdi zmdi-notifications-none noti-icon"></i>
+                            <span class="noti-icon-badge" ng-if="vm.unreadNumber > 0"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-lg" aria-labelledby="Preview" uib-dropdown-menu>
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5>
+                                  <small ng-if="vm.unreadNumber > 0"><span class="label label-danger pull-xs-right">{{vm.unreadNumber}}</span>Unread notifications</small>
+                                  <small ng-if="vm.unreadNumber == 0">There is no unread notification</small>
+                                </h5>
+                            </div>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item" ng-repeat="notification in vm.notifications | orderBy:'is_read'" ng-click="vm.markAsRead(notification._id, notification.dossier_id, notification.is_read)" ng-if="$index < 5 || vm.isShowAll">
+                                <i class="fa" ng-class="{'fa-check':notification.is_read, 'fa-question':!notification.is_read}"></i>
+                                <p class="notify-details">{{vm.getUserById(notification.sender_id).username}} added comments to Dossier #{{notification.dossier_id}} and tagged you</p>
+                            </a>
+
+                            <!-- All-->
+                            <a href="javascript:void(0);" ng-if="vm.notifications.length > 5 && vm.isShowAll" class="dropdown-item notify-item notify-all" ng-click="$event.stopPropagation();vm.isShowAll = !vm.isShowAll">
+                                Hide
+                            </a>
+                            <a href="javascript:void(0);" ng-if="vm.notifications.length > 5 && !vm.isShowAll" class="dropdown-item notify-item notify-all" ng-click="$event.stopPropagation();vm.isShowAll = !vm.isShowAll">
+                                View All
+                            </a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown notification-list" uib-dropdown>
+                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light nav-user" uib-dropdown-toggle href="#" role="button"
+                           aria-haspopup="false" aria-expanded="false">
+                            <img ng-src="{{vm.user.avatar || 'vendor/images/user.png' }}" alt="user" class="img-circle">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-arrow profile-dropdown " uib-dropdown-menu aria-labelledby="Preview">
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5 class="text-overflow"><small>Welcome ! {{vm.user.name}}</small> </h5>
+                            </div>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="zmdi zmdi-account-circle"></i> <span>My Account</span>
+                            </a>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" ng-click="vm.logout()" class="dropdown-item notify-item">
+                                <i class="zmdi zmdi-power"></i> <span>Log Out</span>
+                            </a>
+
+                        </div>
+                    </li>
+
+                </ul>
+
+            </div> <!-- end menu-extras -->
+            <div class="clearfix"></div>
+
+        </div> <!-- end container -->
+    </div>
+    <!-- end topbar-main -->
+</header>
+
+<ui-view></ui-view>

@@ -1,0 +1,1697 @@
+<div class="wrapper abn-container" ng-class="{ 'right-bar-enabled': vm.isSidebar }">
+    <div class="container">
+
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">BC Nummer {{vm.dossier.bc_number}}</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="card-box tilebox-one">
+                    <h6 class="text-muted text-uppercase m-b-10">Dossier details</h6>
+				          	<p>
+				              <br>{{vm.dossier.name}}
+				              <br>{{vm.dossier.address}}
+				              <br>{{vm.dossier.postcode}} {{vm.dossier.city}}
+				              <br>T: {{vm.dossier.telephone}}
+				          	</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+                <div class="card-box tilebox-one">
+                    <div uib-alert class="alert alert-danger text-xs-center" close="closeAlert()">Huidige risico classificering<br><i class="fa fa-exclamation-triangle"></i><br>Verhoogd</div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+                <div class="card-box tilebox-one">
+                    <div id="chart_div"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card-box">
+                		<uib-tabset active="vm.activeTab">
+									    <uib-tab index="0">
+									    	<uib-tab-heading>Dossier</uib-tab-heading>
+									    	<div role="tabpanel" class="tab-pane p-20" aria-labelledby="home-tab">
+									    		<div class="clearfix"></div>
+						            	<uib-accordion class="accordion-view">
+												    <div uib-accordion-group class="panel-default" is-open="true">
+												      <uib-accordion-heading>Achtergrond van de klant</uib-accordion-heading>
+												      <h3>Achtergrond van de klant <button type="button" class="btn btn-custom pull-right" ng-click="vm.addComment('identification')">Maak comment aan</button></h3>
+												      <div class="inner-content m-t-20">
+											      		<div class="form-group">
+											      			<label>1.1a Wat is naam van de klant?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<input type="text" class="form-control m-b-15"/>
+											      			<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg KvK uittreksel toe</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.1b Verschilt de statutaire zetel, genoemd in de KVK, met de plaatsnaam, genoemd in het bezoekadres KvK?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="kvk" ng-model="vm.kvk">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="kvk" ng-model="vm.kvk">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.1c Vul hieronder de statutaire zetel in<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<input type="text" class="form-control"/>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.1d Wijkt het postadres of van bovenstaand adres?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val2" ng-model="vm.val2">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val2" ng-model="vm.val2">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.1e Klant heeft een permanent adres buiten Nederland?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val3" ng-model="vm.val3">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val3" ng-model="vm.val3">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<select class="c-select" ng-options="option for option in ['value #1', 'value #2']" ng-model="vm.selecteer">
+				                            <option value="" disabled selected>Selecteer land</option>
+					                        </select>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.1f Betreft het een buitenlandse rechtspersoon die een bankrelatie bij uw bank in Nederland wil aangaan?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val4" ng-model="vm.val4">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val4" ng-model="vm.val4">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg buitenlandse KvK uittreksel toe</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+												      	</div>
+												      	<div class="form-group">
+											      			<label>1.1g Heeft de klant een connectie met een andere klant bij uw bank?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val5" ng-model="vm.val5">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val5" ng-model="vm.val5">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<div class="row m-b-15">
+												      			<div class="col-xs-12 col-sm-6">
+												      				<input type="text" class="form-control" placeholder="Geef BC Nummer op"/>
+												      			</div>
+												      			<div class="col-xs-12 col-sm-6">
+												      				<textarea class="form-control" placeholder="En licht de relatie in eigen bewoording toe" rows="4"></textarea>
+												      			</div>
+												      		</div>
+												      		<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg printscreen klantbeeld toe</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+												      	</div>
+												      	<div class="form-group">
+											      			<label>1.1h Geeft dit aanleiding tot het verhogen van het risicoprofiel van de klant?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val6" ng-model="vm.val6">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val6" ng-model="vm.val6">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<select class="c-select">
+				                            <option value="verhoogd" selected>Verhoogd</option>
+				                            <option value="verhoogd+">Verhoogd+</option>
+					                        </select>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.1i Is de klant een SEC US person?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val7" ng-model="vm.val7">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val7" ng-model="vm.val7">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      	</div>
+											      		<div class="form-group">
+											      			<label>1.2 Klant geintroduceerd door:<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="radio m-b-15">
+											      				<input type="radio" name="val8" ng-model="vm.val8"/>
+											      				<label>Gerenommeerde financiele instelling, namelijk: <input type="text" class="form-control pull-right"/></label>
+											      			</div>
+											      			<div class="radio m-b-15">
+											      				<input type="radio" name="val8" ng-model="vm.val8"/>
+											      				<label>Bestaande klant, namelijk: <input type="text" class="form-control pull-right"/></label>
+											      			</div>
+											      			<div class="radio m-b-15">
+											      				<input type="radio" name="val8" ng-model="vm.val8"/>
+											      				<label>Eigen network</label>
+											      			</div>
+											      			<div class="radio m-b-15">
+											      				<input type="radio" name="val8" ng-model="vm.val8"/>
+											      				<label>Migratie vanuit particulieren / Corporate</label>
+											      			</div>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.3 Beschrijf het doel voor het aangaan van de relatie met de bank.<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="radio m-b-15">
+											      				<input type="radio" name="val9" ng-model="vm.val9"/>
+											      				<label>(Zakelijk) Betalen / sparen</label>
+											      			</div>
+											      			<div class="radio m-b-15">
+											      				<input type="radio" name="val9" ng-model="vm.val9"/>
+											      				<label>Beleggen</label>
+											      			</div>
+											      			<div class="radio m-b-15">
+											      				<input type="radio" name="val9" ng-model="vm.val9"/>
+											      				<label>Anders - toelichting: <input type="text" class="form-control pull-right"/></label>
+											      			</div>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.4 Zijn er negatieve berichten geweest in de pers over de reputatie en het aanzien van de Rechtspersoon / Trust / Stichting of Personenvennootscheappen?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="m-b-10">
+											      				<a href="#" target="_blank" class="btn btn-googleplus waves-effect waves-light">
+											      					<span class="btn-label">
+											      						<i class="fa fa-google"></i>
+                                      </span>
+                                      Doe een check op Google
+                                   	</a>
+                                   	&nbsp;&nbsp;
+											      				<a href="#" target="_blank" class="btn btn-facebook waves-effect waves-light">
+											      					<span class="btn-label">
+											      						<i class="fa fa-facebook"></i>
+                                      </span>
+                                      Doe een check op Facebook
+                                   	</a>
+											      			</div>
+											      			<div class="m-b-10">
+											      				<a href="#" target="_blank" class="btn btn-linkedin waves-effect waves-light">
+											      					<span class="btn-label">
+											      						<i class="fa fa-linkedin"></i>
+                                      </span>
+                                      Doe een check op Linkedin
+                                   	</a>
+                                   	&nbsp;&nbsp;
+											      				<a href="#" target="_blank" class="btn btn-primary waves-effect waves-light">
+											      					<span class="btn-label">
+											      						<i class="fa fa-bookmark"></i>
+                                      </span>
+                                      Doe een check op Worldcheck
+                                   	</a>
+											      			</div>
+											      			<div class="m-b-10">
+											      				<a href="#" target="_blank" class="btn btn-success waves-effect waves-light">
+                                      Doe een check op Interne rapportering CDD / COMPLIANCE / Investigation
+                                   	</a>
+											      			</div>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val10" ng-model="vm.val10">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val10" ng-model="vm.val10">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg historische bestanden toe uit archief</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+												      	</div>
+												      	<div class="form-group">
+											      			<label>1.5 Is de Rechtspersoon genoteerd aan een erkende beurs of valt de Rechtspersoon ondergereglementeerd financieel toezicht (bijv AFM) of is de klant een 100% dochter van een dergelijke beursgenoteerde of gereglementeerde onderneming?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val11" ng-model="vm.val11">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val11" ng-model="vm.val11">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg historische bestanden toe uit archief</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.6a Beschrijf de structuur en voeg als bijlage een door de klant aangeleverd organogram toe. Dit is niet nodig in geval van een 100% UBO, dan is ondersteuning dmv een uittreksel KvK voldoende.<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Beschrijf in de structuur in eigen woorden"></textarea>
+											      			<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg documenten die structuur aangeven toe (e.g. organogram)</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+				                    		</div>
+				                    		<div class="form-group">
+											      			<label>1.6b Vind jij als banker de structuur en de reden voor de structuur logisch?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Geef een toelichting"></textarea>
+				                    		</div>
+				                    		<div class="form-group">
+											      			<label>1.6c Heb jij als banker twijfel over de plausibiliteit van de (reden) voor de structuur?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="checkbox">
+											      				<input type="checkbox"/>
+											      				<label>Er is sprake van een in het buitenland gevestigde client</label>
+											      			</div>
+											      			<div class="checkbox">
+											      				<input type="checkbox"/>
+											      				<label>Er is sprake van een complexe vennootschappelijke structuur</label>
+											      			</div>
+											      			<div class="checkbox">
+											      				<input type="checkbox"/>
+											      				<label>In de structuur is er sprake van een of meerdere entiteiten die zijn gevestigd in zogenaamde offshore landen of taks havens</label>
+											      			</div>
+											      			<div class="checkbox">
+											      				<input type="checkbox"/>
+											      				<label>Er is sprake van commanditaire vennootschappen met een buitenlandse vennoot</label>
+											      			</div>
+											      			<div class="checkbox">
+											      				<input type="checkbox"/>
+											      				<label>De UBO is lastig vast te stellen(denk aan aandelen aan toonder, "bearer shares", gebruik van "trust deeds", "STAK" "Stiftung" etc.)</label>
+											      			</div>
+											      			<div class="checkbox">
+											      				<input type="checkbox"/>
+											      				<label>Er is geen logische reden waarom de klant in Nederland Bancaire diensten afneemt</label>
+											      			</div>
+											      			<div class="checkbox">
+											      				<input type="checkbox"/>
+											      				<label>"Back to Back" constructies waarbij een internationale partij geld leent op basis van een eigen deposito als onderpand</label>
+											      			</div>
+											      			<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg relevante documenten toe</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+				                    		</div>
+				                    		<div class="form-group">
+											      			<label>1.7a Is er sprake van een structuur met buitenlandse entititeiten?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val12" ng-model="vm.val12">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val12" ng-model="vm.val12">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      	</div>
+												      	<div class="form-group">
+											      			<label>1.7b Zijn er (eventueel naar aanleiding van het vullen van het formulier aanwijzingen die duidenop verhoogde fiscale risico's belastingontduiking)?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val13" ng-model="vm.val13">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val13" ng-model="vm.val13">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      	</div>
+												      	<div class="form-group">
+											      			<label>1.8a Wie zijn de stakeholders van de rechtspersoon/trust/stichting of/personenvennootschap?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<h6 class="text-muted text-underlined">UBO's:</h6>
+											      			<div class="table-responsive" data-pattern="priority-columns">
+                                    <table class="table table-striped table-bordered">
+                                        <thead class="thead-default">
+                                            <tr>
+                                                <th>BC Nummer</th>
+                                                <th data-priority="1">Naam</th>
+                                                <th data-priority="1">Geboorte datum</th>
+                                                <th data-priority="3">Adres</th>
+                                                <th data-priority="3">Woonplaats</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="i in [1, 2, 3, 4]">
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                                  <h6 class="text-muted text-underlined">Bestuurders (handelend):</h6>
+											      			<div class="table-responsive" data-pattern="priority-columns">
+                                    <table class="table table-striped table-bordered">
+                                        <thead class="thead-default">
+                                            <tr>
+                                                <th>BC Nummer</th>
+                                                <th data-priority="1">Naam</th>
+                                                <th data-priority="1">Geboorte datum</th>
+                                                <th data-priority="3">Adres</th>
+                                                <th data-priority="3">Woonplaats</th>
+                                                <th data-priority="3">Omschrijving</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="i in [1, 2, 3, 4]">
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                                  <h6 class="text-muted text-underlined">Gemachtigde(n) handelend (bijv. Boekhouder):</h6>
+											      			<div class="table-responsive" data-pattern="priority-columns">
+                                    <table class="table table-striped table-bordered">
+                                        <thead class="thead-default">
+                                            <tr>
+                                                <th>BC Nummer</th>
+                                                <th data-priority="1">Naam</th>
+                                                <th data-priority="1">Geboorte datum</th>
+                                                <th data-priority="3">Adres</th>
+                                                <th data-priority="3">Woonplaats</th>
+                                                <th data-priority="3">Omschrijving</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="i in [1, 2, 3, 4]">
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            		<td>test</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+											      			<label>1.9 Staan er op het 'overzicht Ubo's, bestuurders en gemachtigden' personen die moeten wordenbeschouwd als een politically exposed person (PEP) of een high profile client?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="row">
+											      				<div class="col-xs-12 col-sm-4 col-md-3">
+											      					<div class="radio">
+											      						<input type="radio" name="val14" ng-model="vm.val14"/>
+											      						<label>Nee</label>
+											      					</div>
+											      					<div class="radio">
+											      						<input type="radio" name="val14" ng-model="vm.val14"/>
+											      						<label>Ja. is PEP</label>
+											      					</div>
+											      					<div class="radio">
+											      						<input type="radio" name="val14" ng-model="vm.val14"/>
+											      						<label>Ja, is High Profile</label>
+											      					</div>
+											      				</div>
+											      				<div class="col-xs-12 col-sm-8 col-md-9">
+											      					<form class="file-upload">
+								                      	<div class="form-group info">
+								                      		<div class="no-files p-20">
+								                      			<h5>Voeg bestanden toe</h5>
+								                      			<span class="text-muted">Click here or drag file to upload.</span>
+								                      		</div>
+								                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+								                      	</div>
+						                    			</form>
+											      				</div>
+											      			</div>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.10a Zijn er negatieve berichten geweest in de pers over de reputatie en het aanzien van een van de personen?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val15" ng-model="vm.val15">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val15" ng-model="vm.val15">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg relevante documenten toe</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+												      	</div>
+												      	<div class="form-group">
+											      			<label>1.10b Zijn u overige factoren bekend met betrekking tot de achtergrond wan de persoon die hetrisicoprofiel van de klant zouden kunnen verhogen? (bijvoorbeeld conflict of interest)<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<textarea class="form-control m-b-15 text-xs-center" placeholder="Geef een toelichting" rows="4"></textarea>
+											      		</div>
+											      		<div class="form-group">
+											      			<label>1.11 Heeft een van de personen een permanent adres buiten Nederland, selecteer hieronder hetbetreffende land?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div>
+											      				<select class="c-select" ng-options="option for option in ['value #1', 'value #2']" ng-model="vm.selecteer">
+				                            	<option value="" disabled selected>Selecteer land</option>
+					                        	</select>
+					                        </div>
+											      		</div>
+												      </div>
+												    </div>
+												    <div uib-accordion-group class="panel-default" is-open="false">
+												      <uib-accordion-heading>Bedrijfsactiviteiten</uib-accordion-heading>
+												      
+												      <h3>Bedrijfsactiviteiten <button type="button" class="btn btn-custom pull-right" ng-click="vm.addComment('identification')">Maak comment aan</button></h3>
+
+												      <div class="inner-content m-t-20">
+											      		<div class="form-group">
+											      			<label>2.1a Omschrijf de aard van de bedrijfsactiviteiten en de zakelijke transacties binnen de bedrijfsstructuur waarbij de klant is betrokken als werknemer, eigenaar of anderzins.<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Geef een toelichting"></textarea>
+											      		</div>
+
+											      		<div class="form-group">
+											      			<label>2.1b Gaat het om een Religieuze of Charitatieve Stichting of Instelling?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val16" ng-model="vm.val16">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val16" ng-model="vm.val16">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<button class="btn btn-primary waves-effect waves-light m-b-15">Check de ANBI Status</button>
+												      		<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Geef een toelichting"></textarea>
+												      		<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg bestanden toe</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+											      		</div>
+
+											      		<div class="form-group">
+											      			<label>2.1c Is de klant betrokken bij activiteiten die door de BANK / Financiele instelling zijn uitgesloten van dienstverlening zoals vermeld op de uitsluitingenlijst?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val17" ng-model="vm.val17">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val17" ng-model="vm.val17">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      	</div>
+
+												      	<div class="form-group">
+												      		<label>2.1d Is de klant betrokken bij activiteiten in sectoren met een verhoogdduurzaamheidsrisicoprofiel?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      		<div class="row">
+												      			<div class="col-xs-12 col-sm-6">
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Agri commodities, bosbouw</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Kledingproductie / maakindustrie</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Bont en nertsenhouderij</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Mijnbouw, metalen en mineralen</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Chemie & Pharma</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Scheepvaart</label>
+												      				</div>
+												      			</div>
+												      			<div class="col-xs-12 col-sm-6">
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Dierproeven</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Tabak</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Defensie</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Activiteiten met een risico op mensenrechtenschending</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Energieproductie met olie & gas</label>
+												      				</div>
+												      			</div>
+												      		</div>
+												      	</div>
+
+												      	<div class="form-group">
+											      			<label>2.1e Doet de klant binnen zijn bedrijfsstructuur zaken en/of transacties met het buitenland?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val18" ng-model="vm.val18">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val18" ng-model="vm.val18">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Met welke landen > zijn hier uitsluitingen door risico landen"></textarea>
+												      	</div>
+
+												      	<div class="form-group">
+											      			<label>2.2a Is de klant betrokken bij een van de volgende zaken / activiteiten of heeft de klant vastgoed naast de eigen woning?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="row">
+											      				<div class="col-xs-12 col-sm-6">
+											      					<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Vastgoed<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Trust<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>PIC's<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Financiele instellingen/beleggingsinstellingen zonder AFM / DNB toezicht<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Gokken<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Ideele en/of charitatieve organisaties / steunfondsen met een zetel in of geldstromen naar risicolanden zonder ANBI / CBF Keurmerk<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Politieke organisaties welke niet in de eerste of tweede kamer zijn vertegenwoordigd<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Sportsector<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+											      				</div>
+											      				<div class="col-xs-12 col-sm-6">
+											      					<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Handel in edelstenen, edelmetaal en luxe goederen<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Seksindustrie / Coffeeshop / Growshop<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Zie eigen beleid<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Rechtspersonen met aandelen aan toonder<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Diversen (bijv. 2e hands autohandel, kunsthandel, bonthandel)<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Religieuze organisaties met een zetel of geldstromen naar risicolanden<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Vleesverwerkende sector (industrie)<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+											      				</div>
+											      			</div>
+											      			<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Toelichting"></textarea>
+											      		</div>
+
+											      		<div class="form-group">
+											      			<label>2.2b Geef aan welke categorieen vastgoed op de klant van toepassing zijn:<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Vastgoed eigen bedrijf</label>
+										      				</div>
+										      				<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Klein portefeuille belleggingspanden</label>
+										      				</div>
+										      				<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Er is vastgoed of activiteit buiten deze categorien</label>
+										      				</div>
+										      				<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Toelichting"></textarea>
+										      				<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg bestanden toe</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+											      		</div>
+
+											      		<div class="form-group">
+											      			<label>2.2c Heeft deze klant in totaal meer dan 5 panden of vastgoed met een waarde van meer dan € 2,5 miljoen verdeeld over de categorieen "Extra woning", "Niet bebouwde grond"? "Kleine portefeuillebeleggingspand(en), of vastgoed buiten de bovenstaande categorieen?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val19" ng-model="vm.val19">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val19" ng-model="vm.val19">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      	</div>
+											      	</div>
+												    </div>
+												    <div uib-accordion-group class="panel-default" is-open="false">
+												      <uib-accordion-heading>Producten en diensten waaraan behoefte is</uib-accordion-heading>
+												      
+												      <h3>Producten en diensten waaraan behoefte is <button type="button" class="btn btn-custom pull-right" ng-click="vm.addComment('identification')">Maak comment aan</button></h3>
+
+												      <div class="inner-content m-t-20">
+											      		<div class="form-group">
+											      			<label>3.1 Geef alle producten en diensten aan die aan de klant (zullen) worden geleverd en het verwachte startbedrag en/of aanwas per jaar. Geef een schatting van het bedrag (en valuta) vooralle afgevinkte vakjes.<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="row">
+											      				<div class="col-xs-12 col-sm-6">
+											      					<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Sparen / Betalen</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Beleggen</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Kredietverlening</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Structureing</label>
+												      				</div>
+											      				</div>
+											      				<div class="col-xs-12 col-sm-6">
+											      					<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Vreemde valuta</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Edele metalen</label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Anders - toelichting:</label>
+												      				</div>
+												      				<input type="text" class="form-control m-b-15"/>
+											      				</div>
+											      			</div>
+											      			<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Toelichting"></textarea>
+											      		</div>
+
+											      		<div class="form-group">
+											      			<label>3.2 Geef alle producten en diensten aan die de klant (zullen) worden geleverd en het verwachte startbedrag en/of aanwas per jaar. Geef een schatting van het bedrag (en valuta) vooralle afgevinkte vakjes.<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val20" ng-model="vm.val20">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val20" ng-model="vm.val20">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Cheques</label>
+										      				</div>
+										      				<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Back-to-back facilities</label>
+										      				</div>
+										      				<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Edele metalen</label>
+										      				</div>
+										      				<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Treasury</label>
+										      				</div>
+										      				<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Vermogensstructuren</label>
+										      				</div>
+										      				<div class="checkbox">
+										      					<input type="checkbox"/>
+										      					<label>Anders - toelichting:</label>
+										      				</div>
+										      				<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Toelichting"></textarea>
+												      	</div>
+
+												      	<div class="form-group">
+											      			<label>3.3 Wikkelt de klant naar verwachting relatief veel zaken af in contanten, gezien de bedrijfsvoering of activiteiten van de klant?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      		</div>
+											      	</div>
+												    </div>
+												    <div uib-accordion-group class="panel-default" is-open="false">
+												      <uib-accordion-heading>Herkomst van vermogen</uib-accordion-heading>
+												      
+												      <h3>Herkomst van vermogen <button type="button" class="btn btn-custom pull-right" ng-click="vm.addComment('identification')">Maak comment aan</button></h3>
+
+												      <div class="inner-content m-t-20">
+											      		<div class="form-group">
+											      			<label>4.1 Geef hieronder de herkomst van het vermogen aan, d.w.z. de herkomst van de vermogensbestanddelen die aan de bank worden toevertrouwd.<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="row">
+											      				<div class="col-xs-12 col-sm-6">
+											      					<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Bedrijfsresultaat<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Bedrijfsverkoop<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Aandelenbelegging<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Erfenis / Schenking<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+											      				</div>
+											      				<div class="col-xs-12 col-sm-6">
+											      					<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Verkocht onroerend goed<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Vermogen verkregen uit bestaande vastgoedportefeuille<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+												      				<div class="checkbox">
+												      					<input type="checkbox"/>
+												      					<label>Overig<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      				</div>
+											      				</div>
+											      			</div>
+											      			<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Licht toe"></textarea>
+											      		</div>
+
+											      		<div class="form-group">
+											      			<label>4.2 Vind jij als banker de herkomst van het vermogen en de hoogte van het vermogen van de klant plausibel?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val21" ng-model="vm.val21">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val21" ng-model="vm.val21">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Licht toe"></textarea>
+												      	</div>
+
+												      	<div class="form-group">
+											      			<label>4.3 Beoordeel het rekeningverloop van deze klant. Dit is alleen van toepassing voor al bestaande ABN AMRO klanten(upstream).<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      		<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Licht toe"></textarea>
+												      	</div>
+
+												      	<div class="form-group">
+											      			<label>4.4 Is er sprake van ongebruikelijk transactieverloop?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val22" ng-model="vm.val22">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val22" ng-model="vm.val22">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Licht toe"></textarea>
+												      	</div>
+
+												      	<div class="form-group">
+											      			<label>4.5 Past het rekening verloop bij het beeld/achtergrond van de klant?<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val23" ng-model="vm.val23">
+												      				<label>Ja</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val23" ng-model="vm.val23">
+												      				<label>Nee</label>
+												      			</div>
+												      		</div>
+												      		<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Licht toe"></textarea>
+												      	</div>
+
+												      	<div class="form-group">
+											      			<label>4.6 Er is sprake van een verhoogd risico indicatie in het RAF. Om deze reden dien je verscherpt onderzoek naar herkomst van vermogen uit te voeren. Onderbouw het hierboven aangegeven herkomst van vermogen (zie vraag 4.1) met documenten / openbare bronnen (zie de TravelsheetLicht) in je eigen woorden toe welke stukken je hebt gebruikt en waarom je de herkomst vanvermogen hiermee voldoende onderbouwd vindt. Overtuig een ander met argumenten van deplausibiliteit van de herkomst van vermogen.<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+												      		<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Licht toe"></textarea>
+												      		<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files p-20">
+						                      			<h5>Voeg bestanden toe</h5>
+						                      			<span class="text-muted">Click here or drag file to upload.</span>
+						                      		</div>
+						                      		<div class="button upload-button" ngf-select="vm.dummyUpload()">Upload on file select</div>
+						                      	</div>
+				                    			</form>
+												      	</div>
+											      	</div>
+												    </div>
+												    <div uib-accordion-group class="panel-default" is-open="false">
+												      <uib-accordion-heading>Risicobeoordeling - toetsing</uib-accordion-heading>
+												      
+												      <h3>Risicobeoordeling - toetsing <button type="button" class="btn btn-custom pull-right" ng-click="vm.addComment('identification')">Maak comment aan</button></h3>
+
+												      <div class="inner-content m-t-20">
+												      	<h4 class="text-muted m-b-15">Voorgestelde risicobeoordeling: Neutraal Risico</h4>
+											      		<div class="form-group">
+											      			<label>Als verantwoordelijke Private Banker stel ik voor deze klant als volgt te beoordelen:<a href class="toggle-sidebar" ng-click="vm.toggleSidebar()"><i class="fa fa-question-circle-o"></i></a></label>
+											      			<div class="inline-elements">
+												      			<div class="radio m-t-0">
+												      				<input type="radio" name="val24" ng-model="vm.val24">
+												      				<label>Neutraal risico</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val24" ng-model="vm.val24">
+												      				<label>Verhoogd risico</label>
+												      			</div>
+												      			<div class="radio m-t-0">	
+												      				<input type="radio" name="val24" ng-model="vm.val24">
+												      				<label>Verhoogd+ risico</label>
+												      			</div>
+												      		</div>
+												      		<textarea class="form-control text-xs-center m-b-15" rows="4" placeholder="Licht toe"></textarea>
+											      		</div>
+											      	</div>
+												    </div>
+						            </div>
+						        	</uib-tab>
+									    <uib-tab index="1">
+									    	<uib-tab-heading>Status</uib-tab-heading>
+									    	<div role="tabpanel" class="tab-pane p-20" aria-labelledby="home-tab">
+									    		<div class="clearfix"></div>
+						            	Tab #2
+						            </div>
+						          </uib-tab>
+						          <uib-tab index="2">
+										    <uib-tab-heading>Geschiedenis</uib-tab-heading>
+										    <div role="tabpanel" class="tab-pane p-20" aria-labelledby="home-tab">
+									    		<div class="clearfix"></div>
+						            	Tab #3
+						            </div>
+						          </uib-tab>
+						         </uib-tabset>
+						    </div>
+            </div>
+        </div>
+		</div>
+
+		<div class="side-bar right-bar">
+			<div class="header">
+      	<h5 class="m-b-0"><i class="fa fa-lightbulb-o"></i>&nbsp;&nbsp;Page Tips<a href class="close-btn pull-right" ng-click="vm.toggleSidebar()"><i class="fa fa-times"></i></a></h5>
+  		</div>
+  		<div class="content">
+  			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  		</div>
+  	</div>
+</div>
+
+<!-- page content -->
+<!-- <div class="right_col" role="main">
+    <div class="">
+
+        <div class="x_content">
+        	<uib-tabset active="vm.activeTab">
+			    <uib-tab index="0">
+			    	<uib-tab-heading>
+			        	Dossier
+			      	</uib-tab-heading>
+			      	<div role="tabpanel" class="tab-pane" aria-labelledby="home-tab">
+
+           				<div class="clearfix"></div>
+		            	<div class="natural-person" ng-if="vm.dossier.type == 0">
+			            	<div class="row">
+			              		<div class="col-md-12 col-sm-12 col-xs-12">
+			                		<div class="x_panel identification">
+			                  			<div class="x_title">
+			                    			<h2><i class="fa fa-user pull-left" style="color:#497CB1"></i> 1. Identificatie</h2>
+			                    			<button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('identification')">ADD COMMENT</button>
+			                    			<button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('identification')">GRAB SCREEN</button>
+			                    			<div class="clearfix"></div>
+			                  			</div>
+			                  
+			                  			<div class="x_content">
+			                    			<p>Bioscoopkaartje: wie ben ik? ubo?</p>
+			                    			<form class="file-upload">
+						                      	<div class="form-group info">
+						                      		<div class="no-files">Click here or drag file to upload.</div>
+						                      		<div class="button upload-button" ngf-select="vm.upload($file, 'identification')">Upload on file select</div>
+						                      	</div>
+			                    			</form>                        
+						                    <ul class="files-list list-group">
+						                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'identification'">
+						                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+						                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+						                      	</li>
+						                    </ul>
+				                  		</div>
+				                	</div>
+				             	</div>
+				            </div>
+            
+				            <div class="row">
+				              <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel source-power">
+				                  <div class="x_title">
+				                    <h2><i class="fa fa-money" style="color:#497CB1"></i> 2. Herkomst van vermogen</h2>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('source-power')">ADD COMMENT</button>
+			                    	<button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('source-power')">GRAB SCREEN</button>                    
+				                    <div class="clearfix"></div>
+				                  </div>
+				                  <div class="x_content">
+				                    <p>Waar komen de liquide middelen vandaan?</p>
+				                    <form class="file-upload">
+				                      <div class="form-group info">
+				                      	<div class="no-files">Click here or drag file to upload.</div>
+						                <div class="button upload-button" ngf-select="vm.upload($file, 'source-power')">Upload on file select</div>
+				                      </div>
+				                    </form>                        
+				                    <ul class="files-list list-group">
+				                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'source-power'">
+				                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+				                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+				                      	</li>
+				                    </ul>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>            
+            
+				            <div class="row">
+				              <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel aml">
+				                  <div class="x_title">
+				                    <h2><i class="fa fa-arrow-circle-right" style="color:#497CB1"></i> 3. AML / Financering / CAAML</h2>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('aml')">ADD COMMENT</button>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('aml')">GRAB SCREEN</button>
+				                    <div class="clearfix"></div>
+				                  </div>
+				                  <div class="x_content">
+				                    <p>Beschrijf de AML / Financering / CAAML hier</p>
+				                    <form class="file-upload">
+				                      <div class="form-group info">
+				                        <div class="no-files">Click here or drag file to upload.</div>
+						                <div class="button upload-button" ngf-select="vm.upload($file, 'aml')">Upload on file select</div>
+				                      </div>
+				                    </form>                        
+				                    <ul class="files-list list-group">
+				                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'aml'">
+				                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+				                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+				                      	</li>
+				                    </ul>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+            
+				            <div class="row">
+				              <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel raf">
+				                  <div class="x_title">
+				                    <h2><i class="fa fa-exclamation-triangle" style="color:#497CB1"></i> 4. RAF</h2>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('raf')">ADD COMMENT</button>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('raf')">GRAB SCREEN</button>                  
+				                    <div class="clearfix"></div>
+				                  </div>
+				                  <div class="x_content">
+				                    <p>Risk Assessment Form</p>
+				                    <form class="file-upload">
+				                      <div class="form-group info">
+				                        <div class="no-files">Click here or drag file to upload.</div>
+						                <div class="button upload-button" ngf-select="vm.upload($file, 'raf')">Upload on file select</div>
+				                      </div>
+				                    </form>                        
+				                    <ul class="files-list list-group">
+				                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'raf'">
+				                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+				                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+				                      	</li>
+				                    </ul>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+          				</div>
+
+          				<div class="corporation" ng-if="vm.dossier.type == 1">
+				            <div class="row">
+			              		<div class="col-md-12 col-sm-12 col-xs-12">
+			                		<div class="x_panel identification">
+			                  			<div class="x_title">
+			                    			<h2><i class="fa fa-user pull-left" style="color:#497CB1"></i> 1. Identificatie</h2>
+			                    			<button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('identification')">ADD COMMENT</button>
+			                    			<button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('identification')">GRAB SCREEN</button>
+			                    			<div class="clearfix"></div>
+			                  			</div>
+			                  
+			                  			<div class="x_content">
+			                    			<p>Bioscoopkaartje: wie ben ik? ubo?</p>
+			                    			<form class="file-upload">
+						                      	<div class="form-group info">
+							                        <div class="no-files">Click here or drag file to upload.</div>
+						                			<div class="button upload-button" ngf-select="vm.upload($file, 'identification')">Upload on file select</div>
+						                      	</div>
+			                    			</form>                        
+						                    <ul class="files-list list-group">
+						                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'identification'">
+						                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+						                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+						                      	</li>
+						                    </ul>
+				                  		</div>
+				                	</div>
+				             	</div>
+				            </div>
+            
+				            <div class="row">
+				              <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel structure">
+				                  <div class="x_title">
+				                    <h2><i class="fa fa-sitemap" style="color:#497CB1"></i> 2. Structuur / Organisatie / Fiscaal / BiBob</h2> 
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('structure')">ADD COMMENT</button>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('structure')">GRAB SCREEN</button>
+				                    <div class="clearfix"></div>
+				                  </div>
+				                  <div class="x_content">
+				                    <p>Uitleg voor Structuur / Organisatie / Fiscaal / BiBob hier</p>
+				                    <form class="file-upload">
+				                      <div class="form-group info">
+				                        <div class="no-files">Click here or drag file to upload.</div>
+						                <div class="button upload-button" ngf-select="vm.upload($file, 'structure')">Upload on file select</div>
+				                      </div>
+				                    </form>                        
+				                    <ul class="files-list list-group">
+				                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'structure'">
+				                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+				                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+				                      	</li>
+				                    </ul>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>  
+            
+				           	<div class="row">
+				              <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel activities">
+				                  <div class="x_title">
+				                    <h2><i class="fa fa-folder-open-o" style="color:#497CB1"></i> 3. Activiteiten</h2>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('activities')">ADD COMMENT</button>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('activities')">GRAB SCREEN</button>
+				                    <div class="clearfix"></div>
+				                  </div>
+				                  <div class="x_content">
+				                    <p>Wat zijn de bedrijfsactiviteiten?</p>
+				                    <form class="file-upload" id="corporation-activities-form">
+				                      <div class="form-group info">
+				                        <div class="no-files">Click here or drag file to upload.</div>
+						                <div class="button upload-button" ngf-select="vm.upload($file, 'activities')">Upload on file select</div>
+				                      </div>
+				                    </form>                        
+				                    <ul class="files-list list-group">
+				                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'activities'">
+				                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+				                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+				                      	</li>
+				                    </ul>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+            
+				           	<div class="row">
+				              <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel source-power">
+				                  <div class="x_title">
+				                    <h2><i class="fa fa-money" style="color:#497CB1"></i> 4. Herkomst van vermogen</h2>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('source-power')">ADD COMMENT</button>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('source-power')">GRAB SCREEN</button>                    
+				                    <div class="clearfix"></div>
+				                  </div>
+				                  <div class="x_content">
+				                    <p>Waar komen de liquide middelen vandaan?</p>
+				                    <form class="file-upload">
+				                      <div class="form-group info">
+				                        <div class="no-files">Click here or drag file to upload.</div>
+						                <div class="button upload-button" ngf-select="vm.upload($file, 'source-power')">Upload on file select</div>
+				                      </div>
+				                    </form>                        
+				                    <ul class="files-list list-group">
+				                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'source-power'">
+				                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+				                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+				                      	</li>
+				                    </ul>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+            
+				           	<div class="row">
+				              <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel aml">
+				                  <div class="x_title">
+				                    <h2><i class="fa fa-arrow-circle-right" style="color:#497CB1"></i> 5. AML / Financering / CAAML</h2>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('aml')">ADD COMMENT</button>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('aml')">GRAB SCREEN</button>
+				                    <div class="clearfix"></div>
+				                  </div>
+				                  <div class="x_content">
+				                    <p>Beschrijf de AML / Financering / CAAML hier</p>
+				                    <form class="file-upload">
+				                      <div class="form-group info">
+				                        <div class="no-files">Click here or drag file to upload.</div>
+						                <div class="button upload-button" ngf-select="vm.upload($file, 'aml')">Upload on file select</div>
+				                      </div>
+				                    </form>                        
+				                    <ul class="files-list list-group">
+				                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'aml'">
+				                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}}</a>
+				                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+				                      	</li>
+				                    </ul>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+            
+				           	<div class="row">
+				              <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel raf">
+				                  <div class="x_title">
+				                    <h2><i class="fa fa-exclamation-triangle" style="color:#497CB1"></i> 6. RAF</h2>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.addComment('raf')">ADD COMMENT</button>
+				                    <button type="button" class="btn btn-success pull-right" ng-click="vm.grabScreen('raf')">GRAB SCREEN</button>                  
+				                    <div class="clearfix"></div>
+				                  </div>
+				                  <div class="x_content">
+				                    <p>Risk Assessment Form</p>
+				                    <form class="file-upload">
+				                      <div class="form-group info">
+				                        <div class="no-files">Click here or drag file to upload.</div>
+						                <div class="button upload-button" ngf-select="vm.upload($file, 'raf')">Upload on file select</div>
+				                      </div>
+				                    </form>                        
+				                    <ul class="files-list list-group">
+				                      	<li class="list-group-item" ng-repeat="file in vm.dossier.attachments | category:'raf'">
+				                      		<a ng-click="vm.downloadImage(file._id)" class="pull-left download-btn"><i class="fa fa-paperclip"></i> {{file.file_name || 'Untitled.png'}} </a>
+				                      		<span class="pull-right">Uploaded By {{vm.getUser(file.user_id).name}}</span>
+				                      	</li>
+				                    </ul>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+				        </div>
+            
+			            <br/>
+			            <div class="text-center">
+			            	<button class="btn btn-warning btn-sm demo3">Verstuur dossier</button>
+			            	<button class="btn btn-primary btn-sm demo3" ng-click="vm.outputPDF()">Output PDF</button>
+			            </div>
+			            <br/>
+                    </div>
+				</uib-tab>
+			    <uib-tab index="1">
+			    	<uib-tab-heading>
+			        	Status
+			      	</uib-tab-heading>
+			      	<div class="x_content" style="background:white;">
+						<div class="clearfix"></div>
+
+            				<div class="natural-person" ng-if="vm.dossier.type == 0">
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel identification" ng-init="identificationComments = (vm.dossier.comments | category:'identification')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-times" style="color:red"></i> 1. Identificatie</h2>      
+					                    <div class="clearfix"></div>
+					                  </div>
+					                  
+					                  <table class="table" style="width:100%;" ng-if="identificationComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in identificationComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="identificationComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+            
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel source-power" ng-init="sourcePowerComments = (vm.dossier.comments | category:'source-power')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-money" style="color:green"></i> 2. Herkomst van vermogen</h2>
+					                    <div class="clearfix"></div>
+					                  </div>
+					                  <table class="table" style="width:100%;" ng-if="sourcePowerComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in sourcePowerComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="sourcePowerComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>            
+            
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel aml" ng-init="amlComments = (vm.dossier.comments | category:'aml')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-arrow-circle-right" style="color:green"></i> 3. AML / Financering / CAAML</h2>					                    
+					                     <div class="clearfix"></div>
+					                  </div>
+					                  <table class="table" style="width:100%;" ng-if="amlComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in amlComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="amlComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+            
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel raf" ng-init="rafComments = (vm.dossier.comments | category:'raf')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-check" style="color:green"></i> 4. RAF</h2>
+					                    <div class="clearfix"></div>
+					                  </div>
+					                  <table class="table" style="width:100%;" ng-if="rafComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in rafComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="rafComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+          					</div>
+
+					        <div class="corporation" ng-if="vm.dossier.type == 1">
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel identification" ng-init="identificationComments = (vm.dossier.comments | category:'identification')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-times" style="color:red"></i> 1. Identificatie</h2>      
+					                    <div class="clearfix"></div>
+					                  </div>
+					                  
+					                  <table class="table" style="width:100%;" ng-if="identificationComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in identificationComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="identificationComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+					            
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel structure" ng-init="structureComments = (vm.dossier.comments | category:'structure')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-check" style="color:green"></i> 2. Structuur / Organisatie / Fiscaal / BiBob</h2>					                    
+					                    <div class="clearfix"></div>
+					                  </div>
+					                  <table class="table" style="width:100%;" ng-if="structureComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in structureComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="structureComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>			
+					            
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel activities" ng-init="activitiesComments = (vm.dossier.comments | category:'activities')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-check" style="color:green"></i> 3. Activiteiten</h2>
+					                    <div class="clearfix"></div>
+					                  </div>
+					                  <table class="table" style="width:100%;" ng-if="activitiesComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in activitiesComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="activitiesComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+					            
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel source-power" ng-init="sourcePowerComments = (vm.dossier.comments | category:'source-power')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-money" style="color:green"></i> 4. Herkomst van vermogen</h2>
+					                    <div class="clearfix"></div>
+					                  </div>
+					                  <table class="table" style="width:100%;" ng-if="sourcePowerComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in sourcePowerComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="sourcePowerComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+					            
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel aml" ng-init="amlComments = (vm.dossier.comments | category:'aml')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-arrow-circle-right" style="color:green"></i> 5. AML / Financering / CAAML</h2>					                    
+					                     <div class="clearfix"></div>
+					                  </div>
+					                  <table class="table" style="width:100%;" ng-if="amlComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in amlComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="amlComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+            
+					            <div class="row">
+					              <div class="col-md-12 col-sm-12 col-xs-12">
+					                <div class="x_panel raf" ng-init="rafComments = (vm.dossier.comments | category:'raf')">
+					                  <div class="x_title">
+					                    <h2><i class="fa fa-check" style="color:green"></i> 6. RAF</h2>
+					                    <div class="clearfix"></div>
+					                  </div>
+					                  <table class="table" style="width:100%;" ng-if="rafComments.length > 0">
+					                  	  <tr>
+					                  		 <th>Comment</th>
+					                  		 <th>Toegevoegd door</th>
+					                  		 <th>Datum</th>
+					                  	  </tr>
+					                  	  <tr ng-repeat="comment in rafComments">
+					                  	  	 <td>{{::comment.content}}</td>
+					                  	  	 <td>{{::vm.getUser(comment.user_id).name}}</td>
+					                  	  	 <td>{{::vm.getCommentDate(comment.create_at)}}</td>
+					                  	  </tr>
+					                  </table>
+					                  <div class="x_content" ng-if="rafComments.length == 0">
+					                      <p>Geen comments.</p>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+					        </div>
+						</div>
+			    </uib-tab>
+			    <uib-tab index="2">
+				    <uib-tab-heading>
+				        Geschiedenis
+				    </uib-tab-heading>
+			        <div class="x_content" style="background:white;">
+                        <h4>Recente gebeurtenissen</h4>
+                        <ul class="messages">
+                        	<li ng-repeat="history in vm.dossier.histories">
+                        		<img ng-src="{{ vm.getUser(history.user_id).avatar 
+                        		|| 'vendor/images/user.png' }}" class="avatar" alt="Avatar"/>
+                        		<div class="message_date">
+                        			<h3 class="date text-info">{{ vm.getFullDates(history.create_at).getDate() }}</h3>
+                        			<p class="month">{{ vm.monthNames[vm.getFullDates(history.create_at).getMonth()] }}<br/>{{ vm.getFullDates(history.create_at).getFullYear() }}</p>
+                        		</div>
+                        		<div class="message_wrapper">
+                        			<h4 class="heading">{{ vm.getUser(history.user_id).name || 'Systeem' }}</h4>
+                        			<blockquote class="message">{{ vm.getNote(history.user_id, history.attachments, history.status).message }}</blockquote>
+                        			<br />
+                        			<p class="url">
+                        				<a ng-click="$event.stopPropagation();vm.activateTab(history.status);"><i class="fa" ng-class="{'fa-file-o':history.status == 0, 'fa-user':history.status == 1 || history.status == 2, 'fa-comment-o':history.status == 3, 'fa-paperclip':history.status == 4}"></i> {{ vm.getNote(history.user_id, history.attachments, history.status).action }}</a>
+                        			</p>
+                        		</div>
+                        	</li>
+                        </ul>
+                    </div>
+			    </uib-tab>
+			</uib-tabset>            
+        </div>
+    </div>
+</div> -->
+<!-- /page content -->
+
+<script type="text/ng-template" id="commentModal.html">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$ctrl.cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Reden van afkeuring</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="message-text" class="form-control-label">Comment:</label>
+        <textarea mentio 
+            mentio-trigger-char="'@'"
+            mentio-items="$ctrl.users"
+            mentio-template-url="/people-mentions.tpl"
+            mentio-search="$ctrl.searchPeople()"
+            mentio-select="$ctrl.getPeopleText(item)"
+            class="editor form-control"
+            mentio-id="'messageContent'"
+            ng-model="$ctrl.message"
+            ng-trim="false"
+            rows="6"/>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">Close</button>
+    <button type="button" class="btn btn-success" ng-click="$ctrl.ok()" ng-disabled="!$ctrl.message">Submit comment</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="grabModal.html">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$ctrl.cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Grab Screen</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="message-text" class="form-control-label">URL:</label>
+        <input class="form-control" name="imageUrl" placeholder="www.example.com" ng-model="$ctrl.imageUrl"/>
+      </div>
+      <div class="form-group">
+        <label for="message-text" class="form-control-label">File Name:</label>
+        <input class="form-control" name="filename" ng-model="$ctrl.fileName"/>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" ng-click="$ctrl.cancel()">Close</button>
+    <button type="button" class="btn btn-success" ng-click="$ctrl.ok()" ng-disabled="!$ctrl.imageUrl || !$ctrl.fileName">Grab Image</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="/people-mentions.tpl">
+    <ul class="list-group user-search">
+        <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+            <img ng-src="{{person.avatar || 'vendor/images/user.png'}}" class="user-photo">
+            <span class="text-primary" ng-bind-html="person.username | mentioHighlight:typedTerm:'menu-highlighted' | unsafe"></span>
+            <em class="text-muted" ng-bind="person.name"></em>
+        </li>
+    </ul>
+</script>

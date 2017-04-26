@@ -1,0 +1,45 @@
+<div class="wrapper home-container">
+    <div class="container">
+
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Dashboard</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-lg-12 col-xl-7">
+                <div class="card-box">
+
+                    <h4 class="header-title m-t-0 m-b-30"><i class="fa fa-folder-open-o"></i> Mijn dossiers</h4>
+
+                    <div class="m-b-30" style="display: inline-block;"></div>
+
+                    <table datatable="" dt-options="vm.dtOptions1" dt-columns="vm.dtColumns1" class="open-dossiers table table-hover table-striped table-bordered"></table>
+
+                </div>
+            </div><!-- end col-->
+
+            <div class="col-xs-12 col-lg-12 col-xl-5">
+                <div class="card-box">
+
+                    <h4 class="header-title m-t-0 m-b-10"><i class="fa fa-folder"></i> Dossiers in review</h4>
+
+                    <div class="m-b-20">
+                        <select class="c-select" ng-options="option for option in vm.userLevelOptions" ng-model="vm.selectedOption">
+                            <option value="" disabled selected>Dropdown with other user categories</option>
+                        </select>
+                    </div>
+
+                    <table datatable="" dt-options="vm.dtOptions2" dt-columns="vm.dtColumns2" class="review-dossiers table table-hover table-striped table-bordered"></table>
+
+                </div>
+            </div><!-- end col-->
+
+
+        </div>
+        <!-- end row -->
+
+    </div>
+</div>

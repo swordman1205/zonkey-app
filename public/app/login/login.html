@@ -1,0 +1,57 @@
+<div class="account-pages"></div>
+<div class="clearfix"></div>
+<div class="wrapper-page">
+
+  <div class="account-bg">
+        <div class="card-box m-b-0">
+            <div class="text-xs-center">
+                <a ui-sref="main.home" class="logo">
+                    <img src="vendor/images/zon.png" height="200"/>
+                </a>
+            </div>
+            <div class="p-20" ng-if="vm.isLoginFailed || vm.isLoginSuccess">
+                <div class="row">
+                    <div class="col-xs-12 text-xs-center">
+                        <div class="alert alert-success" ng-if="vm.isLoginSuccess">
+                            You are logged in successfully!
+                        </div>
+
+                        <div class="alert alert-danger" ng-if="vm.isLoginFailed">
+                            Invalid username and password!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-20">
+                <div class="row">
+                    <div class="col-xs-12 text-xs-center">
+                        <h6 class="text-muted text-uppercase m-b-0 m-t-0">Sign In</h6>
+                    </div>
+                </div>
+                <form class="m-t-20" name="loginForm" novalidate>
+
+                    <div class="form-group row">
+                        <div class="col-xs-12">
+                            <input type="text" class="form-control" placeholder="Username" name="username" ng-model="vm.user.username" ng-required="true"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-xs-12">
+                            <input type="password" class="form-control" placeholder="Password" name="password" ng-model="vm.user.password" ng-required="true"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center row m-t-10">
+                        <div class="col-xs-12">
+                            <button class="btn btn-success btn-block waves-effect waves-light" type="submit" ng-click="vm.login()" ng-disabled="loginForm.$invalid">Log In</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>

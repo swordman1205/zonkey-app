@@ -1,0 +1,122 @@
+/*body {
+	background: transparent;
+}
+
+.navbar-nav.navbar-notification {
+	float: right;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.navbar-nav.navbar-notification i {
+	font-size: 16px;
+	color: #497CB1;
+}
+
+.navbar-nav.navbar-notification .notification {
+	position: relative;
+}
+
+.navbar-nav.navbar-notification .numbers {
+	position: absolute;
+	color: white;
+	background: #f39c12;
+	height: 12px;
+	line-height: 12px;
+	font-size: 10px;
+	font-weight: 100;
+	padding: 0 4px;
+	border-radius: 2px;
+	right: 10px;
+	top: 0;
+    bottom: 20px;
+    margin: auto;
+}
+
+.top_nav .dropdown-menu.dropdown-notification li a {
+	white-space: nowrap;
+	overflow: hidden !important;
+	text-overflow: ellipsis;
+}
+
+.top_nav .dropdown-menu.dropdown-notification li a i.fa {
+	margin-right: 5px;
+}
+
+.top_nav .dropdown-menu.dropdown-notification li a.no-hover {
+	cursor: auto;
+	background: transparent;
+  color: #5A738E;
+}
+
+.top_nav .dropdown-menu.dropdown-notification li a.action-btn {
+	text-align: center;
+}
+
+.navbar-nav .open .dropdown-menu.dropdown-notification {
+	width: auto;
+	max-width: 300px;
+}
+
+.main_container .top_nav {
+	margin-left: 0;
+}
+
+.nav_menu {
+	border-bottom: 0;
+	margin-bottom: 0;
+}
+
+.fixed-header {
+	position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  -webkit-transition: .5s all;
+  -moz-transition: .5s all;
+  transition: .5s all;
+   opacity: .9;
+  -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+}
+
+.header-title {
+	margin-bottom: 50px;
+}
+
+div.container.body {
+	margin-top: 30px;
+}
+
+.fixed-header + div.container.body {
+	margin-top: 100px;
+}
+
+.user-level-options {
+	position: absolute;
+}
+
+.nav.navbar-nav>li>a {
+  color: #497CB1 !important;
+  font-size: 14px;
+}
+*/
+
+.notification-list .notify-item {
+  display: inline-flex;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.notification-list .notify-item .notify-details {
+  margin-left: 15px;
+}
+
+header .logo {
+  max-height: 60px;
+}
+
+.text-underlined {
+  text-decoration: underline;
+}
